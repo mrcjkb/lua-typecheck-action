@@ -22,7 +22,7 @@ end
 local args = {
   paths = parse_list_args(arg_list[1]),
   checklevel = arg_list[2],
-  configpath = (#arg_list > 2 and arg_list[3] or nil),
+  configpath = (arg_list[3] ~= '' and arg_list[3] or nil),
 }
 
 ---@param filename string
