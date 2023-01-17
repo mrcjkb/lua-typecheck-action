@@ -1,2 +1,7 @@
 ---
 ignored:
+  - DL4006
+
+  # TODO: remove when lua-language-server is available
+  - DL3007 # Use latest 
+  - DL3018 # Pin versions
