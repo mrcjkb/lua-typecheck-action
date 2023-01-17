@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 ---@class Args
----@field paths string[] The files or directories to lint
+---@field directories string[] The directories to lint
 ---@field checklevel string The diagnostics level to fail at
 ---@field configpath string? Path to the luarc.json
 
@@ -20,7 +20,7 @@ end
 
 ---@type Args
 local args = {
-  paths = parse_list_args(arg_list[1]),
+  directories = parse_list_args(arg_list[1]),
   checklevel = arg_list[2],
   configpath = (arg_list[3] ~= '' and arg_list[3] or nil),
 }
@@ -81,7 +81,7 @@ local function lint(directory)
 end
 
 local success = true
-for _, directory in ipairs(args.paths) do
+for _, directory in ipairs(args.directories) do
   local result = lint(directory)
   if not result.success then
     print('Diagnostics for directory ' .. result.directory .. ':')

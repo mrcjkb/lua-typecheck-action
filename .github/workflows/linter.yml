@@ -17,6 +17,3 @@ jobs:
 
       - name: Lint Code Base
         uses: ./
-        with:
-          paths: |
-            /entrypoint.lua
