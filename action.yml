@@ -25,6 +25,6 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.directories }}
+    - ${{ inputs.paths }}
     - ${{ inputs.checklevel }}
     - ${{ inputs.configpath }}

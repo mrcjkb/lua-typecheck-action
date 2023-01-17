@@ -33,4 +33,3 @@ FROM lua AS sumneko-lint
 COPY entrypoint.lua /entrypoint.lua
 
 ENTRYPOINT ["/entrypoint.lua"]
-
