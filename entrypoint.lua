@@ -60,6 +60,7 @@ local function lint(directory)
     .. ' --checklevel='
     .. args.checklevel
   local redirect = ' >' .. stdout_file .. ' 2>' .. stderr_file
+  print(cmd)
   local exit_code = os.execute(cmd .. redirect)
   local stdout = read_file(stderr_file) or ''
   print(stdout)
