@@ -1,42 +1,48 @@
 # lua-language-server type check action
 
-A GitHub action that lets you leverage sumneko
-[`lua-language-server`](https://github.com/sumneko/lua-language-server) and
-[EmmyLua](https://emmylua.github.io/annotation.html) to statically type check
-and lint lua code.
+A GitHub action that lets you leverage sumneko [`lua-language-server`](https://github.com/sumneko/lua-language-server)
+and [EmmyLua](https://emmylua.github.io/annotation.html) to statically type check and lint lua code.
 
 ## Introduction
 
-What I found the most frustrating about developing Neovim plugins in Lua is the
-lack of type safety.
+What I found the most frustrating about developing Neovim plugins in Lua is the lack
+of type safety.
 
-When I [added](https://github.com/mrcjkb/haskell-tools.nvim/pull/103/files)
-some EmmyLua docs to one of my plugins (to generate Vimdoc using
-[`lemmy-help`](https://github.com/numToStr/lemmy-help)), I noticed
-`lua-language-server` was giving me diagnostics based on my documentation. This
-was something I was not getting from linters like `luacheck`. So I asked
-myself, "Can I leverage `lua-language-server` and EmmyLua to statically type
-check my Lua code?"
+When I [added](https://github.com/mrcjkb/haskell-tools.nvim/pull/103/files) some EmmyLua
+docs to one of my plugins (to generate Vimdoc using [`lemmy-help`](https://github.com/numToStr/lemmy-help)),
+I noticed `lua-language-server` was giving me diagnostics based on my documentation.
+This was something I was not getting from linters like `luacheck`.
+So I asked myself, "Can I leverage `lua-language-server` and EmmyLua to statically type check my Lua code?"
 
 The result is this GitHub action, which type checks itself: 
 
-[![Type Check Code
-Base](https://github.com/mrcjkb/lua-typecheck-action/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mrcjkb/lua-typecheck-action/actions/workflows/typecheck.yml)
+[![Type Check Code Base](https://github.com/mrcjkb/lua-typecheck-action/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mrcjkb/lua-typecheck-action/actions/workflows/typecheck.yml)
 
 ## Usage
 
-Create `.github/workflows/typecheck.yml` in your repository with the following
-contents:
+Create `.github/workflows/typecheck.yml` in your repository with the following contents:
 
-```yaml --- name: Type Check Code Base on: pull_request: ~ push: branches:
+```yaml
+---
+name: Type Check Code Base
+on:
+  pull_request: ~
+  push:
+    branches:
       - master
 
-jobs: build: name: Type Check Code Base runs-on: ubuntu-latest
+jobs:
+  build:
+    name: Type Check Code Base
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Type Check Code Base uses: mrcjkb/lua-typecheck-action/v0.1.0 ```
+      - name: Type Check Code Base
+        uses: mrcjkb/lua-typecheck-action/v0.1.0
+```
 
 ## Inputs
 
@@ -54,47 +60,39 @@ The diagnostics severity level to fail on. One of:
 Example:
 
 ```yaml
-- name: Type Check Code Base uses: mrcjkb/lua-typecheck-action/v0.1.0 with:
-  checkLevel: Error ```
+- name: Type Check Code Base
+  uses: mrcjkb/lua-typecheck-action/v0.1.0
+  with:
+    checkLevel: Error
+```
 
 ### `directories`
 
-Directories to lint (relative to the repostitory root). Defaults to the
-repository root if none are specified.
+Directories to lint (relative to the repostitory root).
+Defaults to the repository root if none are specified.
 
 Example:
 
 ```yaml
-- name: Type Check Code Base uses: mrcjkb/lua-typecheck-action/v0.1.0 with:
-  directories: | lua tests ```
+- name: Type Check Code Base
+  uses: mrcjkb/lua-typecheck-action/v0.1.0
+  with:
+    directories: |
+     lua
+     tests
+```
 
 ### `configpath`
 
-Path to a
-[`.luarc.json`](https://github.com/sumneko/lua-language-server/wiki/Configuration-File#luarcjson)
-(relative to the repository root).
+Path to a [`.luarc.json`](https://github.com/sumneko/lua-language-server/wiki/Configuration-File#luarcjson) (relative to the repository root).
 
 Example:
 
 ```yaml
-- name: Type Check Code Base uses: mrcjkb/lua-typecheck-action/v0.1.0
+- name: Type Check Code Base
+  uses: mrcjkb/lua-typecheck-action/v0.1.0
   with:
     configpath: ".luarc.json"
-```
-
-### `copy_directories`
-
-Directories in the source directory to be copied to the rock installation prefix as-is. Useful for installing documentation and other files such as samples and tests.
-
-Example to specify additional directories:
-
-```yaml
-- name: Luarocks Upload
-  uses: mrcjkb/luarocks-tag-release@master
-  with:
-    copy_directories: |
-      doc
-      plugin
 ```
 
 ## Can I use this with a non-GPLv2 licensed project?
