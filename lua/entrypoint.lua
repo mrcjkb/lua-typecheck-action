@@ -18,7 +18,7 @@ local function parse_list_args(str)
   return tbl
 end
 
-local workdir = os.getenv('GITHUB_WORKSPACE') or './'
+local workdir = os.getenv('GITHUB_WORKSPACE') or '.'
 
 local directory_list = parse_list_args(arg_list[2])
 
@@ -86,7 +86,7 @@ end
 
 local success = true
 for _, directory in ipairs(args.directories) do
-  local result = lint(workdir .. directory)
+  local result = lint(workdir .. '/' .. directory)
   if not result.success then
     print('Diagnostics for directory ' .. result.directory .. ':')
     print(result.diagnostics)
