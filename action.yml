@@ -1,6 +1,10 @@
 ---
 name: 'Sumneko Lint'
 decription: 'Type check and lint lua code using lua-language-server.'
+author: 'Marc Jakobi'
+branding:
+  color: 'purple'
+  icon: 'moon'
 inputs:
   checklevel:
     description: "The diagnostics severity level to fail on."
