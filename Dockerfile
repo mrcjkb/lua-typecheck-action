@@ -30,6 +30,6 @@ RUN rm -rf lua-${LUA_VERSION} \
 
 FROM lua AS sumneko-lint
 
-COPY entrypoint.lua /entrypoint.lua
+COPY lua/entrypoint.lua /entrypoint.lua
 
 ENTRYPOINT ["/entrypoint.lua"]
