@@ -17,3 +17,5 @@ jobs:
 
       - name: Lint Code Base
         uses: ./
+        with:
+          configpath: ".luarc.json"
