@@ -55,7 +55,7 @@ local function lint(directory)
   }
   local stdout_file = 'stdout.txt'
   local stderr_file = 'stderr.txt'
-  local logpath = '/tmp'
+  local logpath = workdir
   local cmd = 'lua-language-server --check '
     .. directory
     .. (args.configpath and ' --configpath ' .. args.configpath or '')
