@@ -1,6 +1,6 @@
 ---
 name: 'Sumneko Lint'
-decription: ' A GitHub action that lints your Lua code using sumneko lua-language-server. Static type checking with EmmyLua!'
+decription: 'type-check and lint lua code using lua-language-server'
 inputs:
   checklevel:
     description: "The diagnostics severity level to fail on"
