@@ -1,9 +1,9 @@
 ---
 name: 'Sumneko Lint'
-decription: 'type-check and lint lua code using lua-language-server'
+decription: 'Type check and lint lua code using lua-language-server.'
 inputs:
   checklevel:
-    description: "The diagnostics severity level to fail on"
+    description: "The diagnostics severity level to fail on."
     required: true
     default: Warning
     type: choice
@@ -13,13 +13,13 @@ inputs:
       - Information
       - Hint
   directories:
-    description: "The directories to lint (relative to the repository root)"
+    description: "The directories to lint (relative to the repository root)."
     required: true
     default: |
       lua
     type: string
   configpath:
-    description: "Path to a luarc.json config file"
+    description: "Path to a luarc.json config file."
     required: false
     type: string
 runs:
