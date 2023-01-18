@@ -1,8 +1,8 @@
 #!/usr/bin/env lua
 
 ---@class Args
----@field directories string[] The directories to lint
 ---@field checklevel string The diagnostics level to fail at
+---@field directories string[] The directories to lint
 ---@field configpath string? Path to the luarc.json
 
 ---@type string[]
@@ -18,11 +18,13 @@ local function parse_list_args(str)
   return tbl
 end
 
+local workdir = os.getenv('GITHUB_WORKSPACE') or './'
+
 ---@type Args
 local args = {
-  directories = parse_list_args(arg_list[1]),
-  checklevel = arg_list[2],
-  configpath = (arg_list[3] ~= '' and arg_list[3] or nil),
+  checklevel = arg_list[1],
+  directories = parse_list_args(arg_list[2]),
+  configpath = (arg_list[3] ~= '' and workdir .. '/' .. arg_list[3] or nil),
 }
 
 ---@param filename string
@@ -82,7 +84,7 @@ end
 
 local success = true
 for _, directory in ipairs(args.directories) do
-  local result = lint(directory)
+  local result = lint(workdir .. directory)
   if not result.success then
     print('Diagnostics for directory ' .. result.directory .. ':')
     print(result.diagnostics)
