@@ -1,5 +1,5 @@
 ---
-name: 'Sumneko Lint'
+name: 'lua-typecheck-action'
 description: 'Type check and lint lua code using lua-language-server.'
 author: 'Marc Jakobi'
 branding:
