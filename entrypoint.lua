@@ -20,10 +20,12 @@ end
 
 local workdir = os.getenv('GITHUB_WORKSPACE') or './'
 
+local directory_list = parse_list_args(arg_list[2])
+
 ---@type Args
 local args = {
   checklevel = arg_list[1],
-  directories = parse_list_args(arg_list[2]),
+  directories = #directory_list > 0 and directory_list or { '' },
   configpath = (arg_list[3] ~= '' and workdir .. '/' .. arg_list[3] or nil),
 }
 
