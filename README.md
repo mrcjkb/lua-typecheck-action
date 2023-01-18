@@ -14,7 +14,9 @@ I noticed `lua-language-server` was giving me diagnostics based on my documentat
 This was something I was not getting from linters like `luacheck`.
 So I asked myself, "Can I leverage `lua-language-server` and EmmyLua to statically type check my Lua code?"
 
-The result is this GitHub action, which type checks itself.
+The result is this GitHub action, which type checks itself: 
+
+[![Type Check Code Base](https://github.com/mrcjkb/sumneko-lint-action/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mrcjkb/sumneko-lint-action/actions/workflows/typecheck.yml)
 
 ## Usage
 
