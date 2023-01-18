@@ -1,6 +1,6 @@
 ---
 name: 'Sumneko Lint'
-decription: 'Type check and lint lua code using lua-language-server.'
+description: 'Type check and lint lua code using lua-language-server.'
 author: 'Marc Jakobi'
 branding:
   color: 'purple'
