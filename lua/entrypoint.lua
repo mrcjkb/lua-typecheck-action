@@ -66,6 +66,7 @@ local function lint(directory)
   local redirect = ' >' .. stdout_file .. ' 2>' .. stderr_file
   print(cmd)
   local exit_code = os.execute(cmd .. redirect)
+  os.execute('lua-language-server --version > stdout.txt')
   local stdout = read_file(stderr_file) or ''
   print(stdout)
   if exit_code ~= 0 then
