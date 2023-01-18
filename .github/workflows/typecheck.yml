@@ -1,5 +1,5 @@
 ---
-name: Lint Code Base
+name: Type Check Code Base
 on:
   pull_request: ~
   push:
@@ -8,14 +8,14 @@ on:
 
 jobs:
   build:
-    name: Lint Code Base
+    name: Type Check Code Base
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Lint Code Base
+      - name: Type Check Code Base
         uses: ./
         with:
           configpath: ".luarc.json"
