@@ -30,7 +30,6 @@ local args = {
 }
 
 ---@param filename string
----@param foo bar
 ---@return string? content
 local function read_file(filename)
   local content
