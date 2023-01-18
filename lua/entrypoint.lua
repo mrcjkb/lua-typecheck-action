@@ -58,7 +58,7 @@ local function lint(directory)
   local logpath = workdir
   local cmd = 'lua-language-server --check '
     .. directory
-    .. (args.configpath and ' --configpath ' .. args.configpath or '')
+    .. (args.configpath and ' --configpath=' .. args.configpath or '')
     .. ' --logpath='
     .. logpath
     .. ' --checklevel='
