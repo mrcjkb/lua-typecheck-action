@@ -1,8 +1,12 @@
 # TODO: Use official alpine image with pinned package versions when lua-language-server is available
-FROM nixos/nix:2.13.1 AS sumneko-typecheck
+FROM nixpkgs/nix-flakes:nixos-22.11 AS lua-typecheck-action-drv
 
-RUN nix-env -iA nixpkgs.lua5_1 nixpkgs.sumneko-lua-language-server
+COPY bin /pkg/bin
+COPY lua-typecheck-action-scm-1.rockspec /pkg/
+COPY flake.nix /pkg/flake.nix
+COPY flake.lock /pkg/flake.lock
+COPY entrypoint.sh /entrypoint.sh
 
-COPY lua/entrypoint.lua /entrypoint.lua
+FROM lua-typecheck-action-drv AS lua-typecheck-action
 
-ENTRYPOINT ["/entrypoint.lua"]
+ENTRYPOINT ["/entrypoint.sh"]
