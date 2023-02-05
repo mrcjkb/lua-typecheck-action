@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Type Check Code Base
-        uses: mrcjkb/lua-typecheck-action@v0.1.1
+        uses: mrcjkb/lua-typecheck-action@v0.1.2
 ```
 
 ## Inputs
@@ -61,7 +61,7 @@ Example:
 
 ```yaml
 - name: Type Check Code Base
-  uses: mrcjkb/lua-typecheck-action@v0.1.1
+  uses: mrcjkb/lua-typecheck-action@v0.1.2
   with:
     checkLevel: Error
 ```
@@ -75,7 +75,7 @@ Example:
 
 ```yaml
 - name: Type Check Code Base
-  uses: mrcjkb/lua-typecheck-action@v0.1.1
+  uses: mrcjkb/lua-typecheck-action@v0.1.2
   with:
     directories: |
      lua
@@ -90,7 +90,7 @@ Example:
 
 ```yaml
 - name: Type Check Code Base
-  uses: mrcjkb/lua-typecheck-action@v0.1.1
+  uses: mrcjkb/lua-typecheck-action@v0.1.2
   with:
     configpath: ".luarc.json"
 ```
