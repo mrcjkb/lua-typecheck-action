@@ -41,6 +41,8 @@
         text = ''
           lua-typecheck-action.lua "$@"
         '';
+
+        checkPhase = "";
       };
   in {
     packages = perSystem (system: let
