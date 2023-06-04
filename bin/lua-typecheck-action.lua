@@ -5,9 +5,6 @@
 ---@field directories string[] The directories to lint
 ---@field configpath string? Path to the luarc.json
 
----@type string[]
-local arg_list = { ... }
-
 ---@param str string
 ---@return string[] list_arg
 local function parse_list_args(str)
@@ -18,15 +15,21 @@ local function parse_list_args(str)
   return tbl
 end
 
+local function getenv_or_err(env_var)
+  return assert(os.getenv(env_var), env_var .. ' not set.')
+end
+
 local workdir = os.getenv('GITHUB_WORKSPACE') or '.'
 
-local directory_list = parse_list_args(arg_list[2])
+local directory_args = getenv_or_err('INPUT_DIRECTORIES')
+local config_path_input = getenv_or_err('INPUT_CONFIGPATH')
+local directory_list = parse_list_args(directory_args)
 
 ---@type Args
 local args = {
-  checklevel = arg_list[1],
+  checklevel = getenv_or_err('INPUT_CHECKLEVEL'),
   directories = #directory_list > 0 and directory_list or { '' },
-  configpath = (arg_list[3] ~= '' and '"' .. workdir .. '/' .. arg_list[3] .. '"' or nil),
+  configpath = (config_path_input ~= '' and '"' .. workdir .. '/' .. config_path_input .. '"' or nil),
 }
 
 ---@param filename string
