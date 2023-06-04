@@ -27,9 +27,15 @@ inputs:
     required: false
     type: string
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.checklevel }}
-    - ${{ inputs.directories }}
-    - ${{ inputs.configpath }}
+  using: "composite"
+  steps:
+    - uses: cachix/install-nix-action@v21
+    - run: |
+        nix profile install --accept-flake-config "${{ github.action_path }}#lua-typecheck-action"
+      shell: bash
+    - run: lua-typecheck-action
+      env:
+        INPUT_CHECKLEVEL: ${{ inputs.checklevel }}
+        INPUT_DIRECTORIES: ${{ inputs.directories }}
+        INPUT_CONFIGPATH: ${{ inputs.configpath }}
+      shell: bash
