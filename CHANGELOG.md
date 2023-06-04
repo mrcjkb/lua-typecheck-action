@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.0] - 2023-05-04
+### Changed
+- Replace docker action with nix composite action
+
 ## [v0.1.2] - 2023-02-05
 ### Changed
 - Use nix flake to build and run
