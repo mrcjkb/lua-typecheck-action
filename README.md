@@ -1,6 +1,6 @@
 # lua-language-server type check action
 
-A GitHub action that lets you leverage sumneko [`lua-language-server`](https://github.com/sumneko/lua-language-server)
+A GitHub action that lets you leverage [`lua-language-server`](https://github.com/LuaLS/lua-language-server)
 and [EmmyLua](https://emmylua.github.io/annotation.html) to statically type check and lint lua code.
 
 ## Introduction
@@ -84,7 +84,7 @@ Example:
 
 ### `configpath`
 
-Path to a [`.luarc.json`](https://github.com/sumneko/lua-language-server/wiki/Configuration-File#luarcjson) (relative to the repository root).
+Path to a [`.luarc.json`](https://github.com/LuaLS/lua-language-server/wiki/Configuration-File#luarcjson) (relative to the repository root).
 
 Example:
 

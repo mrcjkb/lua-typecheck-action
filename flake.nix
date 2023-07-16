@@ -1,5 +1,5 @@
 {
-  description = "A GitHub action that lints your Lua code using sumneko lua-language-server. Static type checking with EmmyLua!";
+  description = "A GitHub action that lints your Lua code using lua-language-server. Static type checking with EmmyLua!";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -13,7 +13,6 @@
   outputs = {
     self,
     nixpkgs,
-    pre-commit-hooks,
     ...
   }: let
     supportedSystems = [
@@ -34,7 +33,7 @@
       pkgs.writeShellApplication {
         name = "lua-typecheck-action";
         runtimeInputs = with pkgs; [
-          sumneko-lua-language-server
+          lua-language-server
           lua-typecheck-action-wrapped
         ];
 
