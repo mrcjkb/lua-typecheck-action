@@ -95,6 +95,10 @@ Example:
     configpath: ".luarc.json"
 ```
 
+## Wiki
+
+See [the wiki](https://github.com/mrcjkb/lua-typecheck-action/wiki) for usage examples.
+
 ## Can I use this with a non-GPLv2 licensed project?
 
 Yes.
