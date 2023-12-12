@@ -63,7 +63,7 @@ Example:
 - name: Type Check Code Base
   uses: mrcjkb/lua-typecheck-action@v0.1.2
   with:
-    checkLevel: Error
+    checklevel: Error
 ```
 
 ### `directories`
