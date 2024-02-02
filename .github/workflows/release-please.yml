@@ -1,0 +1,45 @@
+---
+permissions:
+  contents: write
+  pull-requests: write
+
+name: release-please
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Release
+      uses: google-github-actions/release-please-action@v4
+      with:
+        token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+        release-type: simple
+        signoff: "Marc Jakobi<marc@jakobi.dev>"
+        changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"deps","section":"Dependencies","hidden":false}]'
+    - uses: actions/checkout@v4
+    - name: auto-merge
+      uses: reitermarkus/automerge@v2
+      with:
+        package-name: lua-typecheck-action
+        token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
+        merge-method: squash
+        pull-request: ${{ github.event.inputs.pull-request }}
+    - name: Tag major and minor versions
+      if: ${{ steps.release.outputs.release_created }}
+      run: |
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        git remote add gh-token "https://${{ secrets.GH_TOKEN_FOR_UPDATES }}@github.com/google-github-actions/release-please-action.git"
+        git tag -d v${{ steps.release.outputs.major }} || true
+        git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+        git push origin :v${{ steps.release.outputs.major }} || true
+        git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+        git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
+        git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+        git push origin v${{ steps.release.outputs.major }}
+        git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
