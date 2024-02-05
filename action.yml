@@ -31,7 +31,7 @@ runs:
   steps:
     - uses: cachix/install-nix-action@v25
     - run: |
-        nix profile install --accept-flake-config "${{ github.action_path }}#lua-typecheck-action"
+        nix profile install --quiet --accept-flake-config "${{ github.action_path }}#lua-typecheck-action"
       shell: bash
     - run: lua-typecheck-action
       env:
