@@ -1,15 +1,15 @@
 # lua-language-server type check action
 
 A GitHub action that lets you leverage [`lua-language-server`](https://github.com/LuaLS/lua-language-server)
-and [EmmyLua](https://emmylua.github.io/annotation.html) to statically type check and lint lua code.
+and [luaCATS](https://luals.github.io/wiki/annotations/) to statically type check and lint lua code.
 
 ## Introduction
 
 What I found the most frustrating about developing Neovim plugins in Lua is the lack
 of type safety.
 
-When I [added](https://github.com/mrcjkb/haskell-tools.nvim/pull/103/files) some EmmyLua
-docs to one of my plugins (to generate Vimdoc using [`lemmy-help`](https://github.com/numToStr/lemmy-help)),
+When I [added](https://github.com/mrcjkb/haskell-tools.nvim/pull/103/files) some LuaCATS
+annotations to one of my plugins (to generate Vimdoc using [`lemmy-help`](https://github.com/numToStr/lemmy-help)),
 I noticed `lua-language-server` was giving me diagnostics based on my documentation.
 This was something I was not getting from linters like `luacheck`.
 So I asked myself, "Can I leverage `lua-language-server` and EmmyLua to statically type check my Lua code?"
