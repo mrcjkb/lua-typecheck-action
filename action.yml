@@ -7,25 +7,17 @@ branding:
   icon: 'moon'
 inputs:
   checklevel:
-    description: "The diagnostics severity level to fail on."
+    description: "The diagnostics severity level to fail on (Error, Warning, Information or Hint)"
     required: true
     default: Warning
-    type: choice
-    options:
-      - Error
-      - Warning
-      - Information
-      - Hint
   directories:
     description: "The directories to lint (relative to the repository root)."
     required: true
     default: |
       lua
-    type: string
   configpath:
     description: "Path to a luarc.json config file."
     required: false
-    type: string
 runs:
   using: "composite"
   steps:
