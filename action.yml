@@ -14,7 +14,7 @@ inputs:
     description: "The directories to lint (relative to the repository root)."
     required: true
     default: |
-      lua
+      .
   configpath:
     description: "Path to a luarc.json config file."
     required: false
