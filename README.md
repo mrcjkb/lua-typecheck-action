@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Type Check Code Base
         uses: mrcjkb/lua-typecheck-action@v0
