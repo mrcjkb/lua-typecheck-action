@@ -23,32 +23,49 @@
 
     lua-typecheck-action-for = system: let
       pkgs = pkgsFor system;
-      lua-typecheck-action-wrapped = pkgs.lua51Packages.buildLuaApplication {
-        pname = "lua-typecheck-action";
-        version = "scm-1";
-
-        src = self;
-      };
     in
-      pkgs.writeShellApplication {
-        name = "lua-typecheck-action";
-        runtimeInputs = with pkgs; [
-          lua-language-server
-          lua-typecheck-action-wrapped
-        ];
+      pkgs.luajit.pkgs.callPackage ({
+        buildLuaApplication,
+        llscheck,
+        busted,
+      }:
+        buildLuaApplication {
+          pname = "lua-typecheck-action";
+          version = "scm-1";
 
-        text = ''
-          lua-typecheck-action.lua "$@"
-        '';
+          src = self;
 
-        checkPhase = "";
-      };
+          nativeBuildInputs = [pkgs.makeWrapper];
+
+          # XXX: Somehow nativeCheckInputs doesn't work
+          propagatedBuildInputs = [llscheck busted];
+
+          postInstall = ''
+              makeWrapper $out/bin/lua-typecheck-action.lua $out/bin/lua-typecheck-action
+          '';
+
+          doCheck = true;
+        }) {};
   in {
     packages = perSystem (system: let
       lua-typecheck-action = lua-typecheck-action-for system;
     in {
       default = lua-typecheck-action;
       inherit lua-typecheck-action;
+    });
+    shells = perSystem (system: {
+      default = let
+        pkgs = pkgsFor system;
+        lua-typecheck-action = lua-typecheck-action-for system;
+      in
+        lua-typecheck-action.overrideAttrs (oa: {
+          doCheck = false;
+          buildInputs = with pkgs; [
+            alejandra
+            stylua
+            luacheck
+          ];
+        });
     });
   };
 }

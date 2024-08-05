@@ -15,86 +15,25 @@ local function parse_list_args(str)
   return tbl
 end
 
-local function getenv_or_err(env_var)
-  return assert(os.getenv(env_var), env_var .. ' not set.')
-end
-
 local workdir = os.getenv('GITHUB_WORKSPACE') or '.'
 
-local directory_args = getenv_or_err('INPUT_DIRECTORIES')
-local config_path_input = getenv_or_err('INPUT_CONFIGPATH')
-local directory_list = parse_list_args(directory_args)
+local directory_args = os.getenv('INPUT_DIRECTORIES')
+local config_path_input = os.getenv('INPUT_CONFIGPATH') or '.luarc.json'
+
+local fh = io.open(config_path_input, 'r')
+if not fh then
+  error(config_path_input .. ' not found.')
+end
+fh:close()
+
+local directory_list = directory_args and parse_list_args(directory_args) or { '' }
 
 ---@type Args
 local args = {
-  checklevel = getenv_or_err('INPUT_CHECKLEVEL'),
-  directories = #directory_list > 0 and directory_list or { '' },
+  checklevel = os.getenv('INPUT_CHECKLEVEL') or '"Warning"',
+  workdir = workdir,
+  directories = directory_list,
   configpath = (config_path_input ~= '' and '"' .. workdir .. '/' .. config_path_input .. '"' or nil),
 }
 
----@param filename string
----@return string? content
-local function read_file(filename)
-  local content
-  local f = io.open(filename, 'r')
-  if f then
-    content = f:read('*a')
-    f:close()
-  end
-  return content
-end
-
----@class LintResult
----@field success boolean
----@field directory string
----@field diagnostics string?
-
----@param directory string
----@return LintResult
-local function lint(directory)
-  local result = {
-    directory = directory,
-  }
-  local stdout_file = 'stdout.txt'
-  local stderr_file = 'stderr.txt'
-  local logpath = '.'
-  local cmd = 'lua-language-server --check '
-    .. directory
-    .. (args.configpath and ' --configpath=' .. args.configpath or '')
-    .. ' --logpath='
-    .. logpath
-    .. ' --checklevel='
-    .. args.checklevel
-  local redirect = ' >' .. stdout_file .. ' 2>' .. stderr_file
-  print(cmd)
-  local exit_code = os.execute(cmd .. redirect)
-  local stdout = read_file(stderr_file) or ''
-  print(stdout)
-  if exit_code ~= 0 then
-    local stderr = read_file(stderr_file) or ''
-    print(stderr)
-    error('Failed to call lua-language-server. Exit code: ' .. exit_code)
-  end
-  local logfile = logpath .. '/check.json'
-  local diagnostics = read_file(logfile)
-  if diagnostics and diagnostics ~= '' then
-    result.success = false
-    result.diagnostics = diagnostics
-    return result
-  end
-  result.success = true
-  return result
-end
-
-local success = true
-for _, directory in ipairs(args.directories) do
-  local result = lint('"' .. workdir .. '/' .. directory .. '"')
-  if not result.success then
-    print('Diagnostics for directory ' .. result.directory .. ':')
-    print(result.diagnostics)
-    success = false
-  end
-end
-if not success then
-  error('LINT FAILED!')
-end
+require('lua-typecheck-action').run(args)

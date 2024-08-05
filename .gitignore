@@ -41,3 +41,6 @@ luac.out
 
 # Nix
 result
+
+stdout.txt
+stderr.txt

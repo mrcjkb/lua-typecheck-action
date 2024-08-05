@@ -1,0 +1,2 @@
+---@class Foo
+---@field bar boolean
