@@ -21,7 +21,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: cachix/install-nix-action@V27
+    - uses: cachix/install-nix-action@V28
     - run: |
         nix profile install --quiet --accept-flake-config "${{ github.action_path }}#lua-typecheck-action"
       shell: bash
