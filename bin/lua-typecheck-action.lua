@@ -25,7 +25,7 @@ local directory_args = getenv_or_err('INPUT_DIRECTORIES')
 local config_path_input = getenv_or_err('INPUT_CONFIGPATH')
 local directory_list = parse_list_args(directory_args)
 
----@type Args
+---@type Arg
 local args = {
   checklevel = getenv_or_err('INPUT_CHECKLEVEL'),
   directories = #directory_list > 0 and directory_list or { '' },
