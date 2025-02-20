@@ -57,29 +57,19 @@ local function lint(directory)
   }
   local stdout_file = 'stdout.txt'
   local stderr_file = 'stderr.txt'
-  local logpath = '.'
-  local cmd = 'lua-language-server --check '
+  local cmd = 'lua-language-server --check_format=pretty --check '
     .. directory
     .. (args.configpath and ' --configpath=' .. args.configpath or '')
-    .. ' --logpath='
-    .. logpath
     .. ' --checklevel='
     .. args.checklevel
   local redirect = ' >' .. stdout_file .. ' 2>' .. stderr_file
   print(cmd)
   local exit_code = os.execute(cmd .. redirect)
-  local stdout = read_file(stderr_file) or ''
-  print(stdout)
+  local stdout = read_file(stdout_file) or ''
   if exit_code ~= 0 then
     local stderr = read_file(stderr_file) or ''
-    print(stderr)
-    error('Failed to call lua-language-server. Exit code: ' .. exit_code)
-  end
-  local logfile = logpath .. '/check.json'
-  local diagnostics = read_file(logfile)
-  if diagnostics and diagnostics ~= '' then
-    result.success = false
-    result.diagnostics = diagnostics
+    result.success = false;
+    result.diagnostics = stdout .. '\n\n' .. stderr
     return result
   end
   result.success = true
